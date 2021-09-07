@@ -9,8 +9,10 @@
 #define MODELO 150
 #define PLACA 100
 
+// inplementar sistema de armazenagem em txt, sistema de checagem de entrada no cadastro(n consegui)
+
 typedef struct {
-	char marca[MARCA], modelo[MODELO], placa[PLACA];
+	char marca[MARCA], modelo[MODELO], placa[PLACA], entSistema_Modelo[MODELO];
 	int anofab, existencia;
 }veiculo;
 veiculo	Veiculo[maxVei];
@@ -159,17 +161,36 @@ int listaAe() {
 
 int listaM() {
 	system("cls");
-	char modeloo[MODELO], entUsuario, entSistema;
-	int selecaoM;
+	char modeloo[MODELO], entUsuario[MODELO], entSistema[MODELO], s1[MODELO], s2[MODELO];
+	int selecaoM, k	;
 	do {
 		system("cls");
 		printf("Digite o modelo do veículo a ser pesquisado: ");
 		fflush(stdin);
 		fgets(modeloo, sizeof(modeloo), stdin);
+		
+		int t = 0;
+		while(modeloo[t] != '\0') {
+			entUsuario[t] = tolower(modeloo[t]);
+			t++;
+		}
+		entUsuario[t] = '\0';
+		
+		for (k = 0; k < maxVei; k++) {
+			if(Veiculo[k].existencia == 1){
+				int r = 0;
+				while(Veiculo[k].modelo[r] != '\0') {
+					Veiculo[k].entSistema_Modelo[r] = tolower(Veiculo[k].modelo[r]);
+					r++;
+				}
+				Veiculo[k].entSistema_Modelo[r] = '\0';
+			}
+		}
+		
 		int i;
 		for (i = 0; i < maxVei; i++) {
 			if(Veiculo[i].existencia == 1){
-				if (strcmp(Veiculo[i].modelo, modeloo) == 0) {
+				if (strcmp(Veiculo[i].entSistema_Modelo, entUsuario) == 0) {
 					printf("============================\nNúmero do Veículo - %d\n", i + 1);
 					printf("Ano de Fabricação: %d\n", Veiculo[i].anofab);
 					printf("Marca: %s", Veiculo[i].marca);
@@ -201,7 +222,7 @@ int cadVec (){
 		fgets(modeloc, sizeof(modeloc), stdin);
 		printf("Placa: ");
 		fgets(placac, sizeof(placac), stdin);
-		printf("Ano de Fabricação: ");	
+		printf("Ano de Fabricação: ");
 		scanf("%d", &anofabc);
 		
 		int i;
