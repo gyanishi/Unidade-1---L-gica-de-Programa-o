@@ -9,8 +9,6 @@
 #define MODELO 150
 #define PLACA 100
 
-// inplementar sistema de armazenagem em txt, sistema de checagem de entrada no cadastro(n consegui)
-
 typedef struct {
 	char marca[MARCA], modelo[MODELO], placa[PLACA], entSistema_Modelo[MODELO];
 	int anofab, existencia;
